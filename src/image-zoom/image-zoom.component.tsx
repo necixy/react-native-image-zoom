@@ -220,7 +220,8 @@ export default class ImageViewer extends React.Component<ImageZoomProps, ImageZo
 
             // diffX > 0 表示手往右滑，图往左移动，反之同理
             // horizontalWholeOuterCounter > 0 表示溢出在左侧，反之在右侧，绝对值越大溢出越多
-            if (this.props.imageWidth * this.scale > this.props.cropWidth) {
+            // #Nec
+            if (true) {
               // 如果图片宽度大图盒子宽度， 可以横向拖拽
               // 没有溢出偏移量或者这次位移完全收回了偏移量才能拖拽
               if (this.horizontalWholeOuterCounter > 0) {
@@ -272,7 +273,9 @@ export default class ImageViewer extends React.Component<ImageZoomProps, ImageZo
 
               // 但是横向不能出现黑边
               // 横向能容忍的绝对值
-              const horizontalMax = (this.props.imageWidth * this.scale - this.props.cropWidth) / 2 / this.scale;
+              // #Nec
+              // const horizontalMax = (this.props.imageWidth * this.scale - this.props.cropWidth) / 2 / this.scale;
+              var horizontalMax = this.props.imageWidth / 2;
               if (this.positionX < -horizontalMax) {
                 // 超越了左边临界点，还在继续向左移动
                 this.positionX = -horizontalMax;
@@ -308,8 +311,17 @@ export default class ImageViewer extends React.Component<ImageZoomProps, ImageZo
           }
 
           // 如果图片高度大于盒子高度， 可以纵向弹性拖拽
-          if (this.props.imageHeight * this.scale > this.props.cropHeight) {
+          // #Nec
+          if (true) {
+            // #Nec
+            var vMax = this.props.imageHeight / 2;
             this.positionY += diffY / this.scale;
+
+            if (this.positionY < -vMax) {
+              this.positionY = -vMax;
+            } else if (this.positionY > vMax) {
+              this.positionY = vMax;
+            }
             this.animatedPositionY.setValue(this.positionY);
 
             // 如果图片上边缘脱离屏幕上边缘，则进入 swipeDown 动作
@@ -489,29 +501,33 @@ export default class ImageViewer extends React.Component<ImageZoomProps, ImageZo
 
     if (this.props.imageWidth * this.scale <= this.props.cropWidth) {
       // 如果图片宽度小于盒子宽度，横向位置重置
-      this.positionX = 0;
-      Animated.timing(this.animatedPositionX, {
-        toValue: this.positionX,
-        duration: 100,
-        useNativeDriver: !!this.props.useNativeDriver,
-      }).start();
+      // #Nec
+      // this.positionX = 0;
+      // Animated.timing(this.animatedPositionX, {
+      //   toValue: this.positionX,
+      //   duration: 100,
+      //   useNativeDriver: !!this.props.useNativeDriver,
+      // }).start();
     }
 
     if (this.props.imageHeight * this.scale <= this.props.cropHeight) {
       // 如果图片高度小于盒子高度，纵向位置重置
-      this.positionY = 0;
-      Animated.timing(this.animatedPositionY, {
-        toValue: this.positionY,
-        duration: 100,
-        useNativeDriver: !!this.props.useNativeDriver,
-      }).start();
+      // #Nec
+      // this.positionY = 0;
+      // Animated.timing(this.animatedPositionY, {
+      //   toValue: this.positionY,
+      //   duration: 100,
+      //   useNativeDriver: !!this.props.useNativeDriver,
+      // }).start();
     }
 
     // 横向肯定不会超出范围，由拖拽时控制
     // 如果图片高度大于盒子高度，纵向不能出现黑边
     if (this.props.imageHeight * this.scale > this.props.cropHeight) {
       // 纵向能容忍的绝对值
-      const verticalMax = (this.props.imageHeight * this.scale - this.props.cropHeight) / 2 / this.scale;
+      // #Nec
+      // const verticalMax = (this.props.imageHeight * this.scale - this.props.cropHeight) / 2 / this.scale;
+      var verticalMax = this.props.imageHeight / 2;
       if (this.positionY < -verticalMax) {
         this.positionY = -verticalMax;
       } else if (this.positionY > verticalMax) {
@@ -526,7 +542,9 @@ export default class ImageViewer extends React.Component<ImageZoomProps, ImageZo
 
     if (this.props.imageWidth * this.scale > this.props.cropWidth) {
       // 纵向能容忍的绝对值
-      const horizontalMax = (this.props.imageWidth * this.scale - this.props.cropWidth) / 2 / this.scale;
+      // #Nec
+      // const horizontalMax = (this.props.imageWidth * this.scale - this.props.cropWidth) / 2 / this.scale;
+      const horizontalMax = this.props.imageWidth / 2;
       if (this.positionX < -horizontalMax) {
         this.positionX = -horizontalMax;
       } else if (this.positionX > horizontalMax) {
