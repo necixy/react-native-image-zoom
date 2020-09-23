@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ascoders/react-native-image-zoom.git"
+    "url": "https://github.com/necixy/react-native-image-zoom"
   },
   "keywords": [
     "image-zoom"
